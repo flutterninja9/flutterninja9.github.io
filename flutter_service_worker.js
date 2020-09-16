@@ -6,14 +6,14 @@ const RESOURCES = {
   "assets/AssetManifest.json": "2efbb41d7877d10aac9d091f58ccd7b9",
 "assets/FontManifest.json": "dc3d03800ccca4601324923c0b1d6d57",
 "assets/fonts/MaterialIcons-Regular.otf": "a68d2a28c526b3b070aefca4bac93d25",
-"assets/NOTICES": "461aba3aa45d0e4f2e9dce31d03ac60e",
+"assets/NOTICES": "bd2f6e2490b178e773b7b55e3cc0ce73",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "115e937bb829a890521f72d2e664b632",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
 "index.html": "1ef74bd4277edfeafb82c8e655efe9e6",
 "/": "1ef74bd4277edfeafb82c8e655efe9e6",
-"main.dart.js": "2d804ee9fefe114e4074bbc700cf13f3",
+"main.dart.js": "70169e923064d628621d5de7540886b9",
 "manifest.json": "3029ed3aba23b686e2d3ef2476c1658e"
 };
 
