@@ -60689,8 +60689,8 @@ Y.F8.prototype={
 M:function(a,b){var s=null,r=b.ab(t.w).f.a.a*0.18
 return M.bn(s,T.kl(H.c([L.cZ("My Tools",K.a7(b).a9.a),M.bn(s,T.a4a(C.f3,Y.axM(this.c),C.u5,C.m),C.k,s,s,s,s,s,new V.az(0,35,0,0),s,s,s,s)],t.Y),C.b_,C.J),C.k,s,s,s,s,s,s,new V.az(r,35,r,35),s,s,s)}}
 Y.a9T.prototype={
-$1:function(a){var s=null,r=a.c
-this.a.push(M.bn(s,V.ahy(new T.je(C.zu,T.kl(H.c([new M.tV(s,C.pr,40,new O.BA("tool-icons/"+a.b,s),s,40,s),L.cZ(a.a,B.ais(a.d,s,s,2))],t.Y),C.O,C.nm),s),r,0),C.k,s,s,s,s,s,new V.az(0,0,20,20),s,s,s,s))},
+$1:function(a){var s=null,r=a.c,q="assets/"+("tool-icons/"+a.b)
+this.a.push(M.bn(s,V.ahy(new T.je(C.zu,T.kl(H.c([new M.tV(s,C.pr,40,new O.BA(q,s),s,40,s),L.cZ(a.a,B.ais(a.d,s,s,2))],t.Y),C.O,C.nm),s),r,0),C.k,s,s,s,s,s,new V.az(0,0,20,20),s,s,s,s))},
 $S:415}
 Y.Gl.prototype={
 M:function(a,b){return K.wK(new Y.ZQ(this,b.ab(t.w).f.a))},
