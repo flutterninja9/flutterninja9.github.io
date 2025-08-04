@@ -1,0 +1,299 @@
+/* Mobile First Responsive Design */
+
+/* Extra Small devices (phones, 576px and down) */
+@media (max-width: 575.98px) {
+    .app-bar-container {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+    
+    .logo-badge {
+        font-size: 20px;
+        padding: var(--spacing-xs);
+    }
+    
+    .nav-links {
+        gap: var(--spacing-md);
+    }
+    
+    .nav-link {
+        font-size: 14px;
+    }
+    
+    .user-card-container,
+    .current-status-container,
+    .projects-container,
+    .tools-container {
+        padding: 0 var(--spacing-md);
+    }
+    
+    .user-card {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--spacing-lg);
+        min-height: auto;
+        padding: var(--spacing-lg) 0;
+    }
+    
+    .user-avatar img {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .user-info h1 {
+        font-size: 20px;
+    }
+    
+    .user-info p {
+        font-size: 14px;
+    }
+    
+    .project-card {
+        flex-direction: column;
+        margin: 0 var(--spacing-md);
+    }
+    
+    .project-image {
+        height: 200px;
+    }
+    
+    .project-content {
+        padding: var(--spacing-lg) var(--spacing-md);
+    }
+    
+    .project-title {
+        font-size: 20px;
+    }
+    
+    .project-description {
+        font-size: 14px;
+    }
+    
+    .project-buttons {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+    
+    .tools-grid {
+        justify-content: center;
+        gap: var(--spacing-lg);
+    }
+    
+    .tool-card {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .tool-icon {
+        font-size: 24px;
+    }
+    
+    .tool-name {
+        font-size: 11px;
+    }
+    
+    .contact-container {
+        padding: 0 var(--spacing-md);
+    }
+    
+    .contact-container h2 {
+        font-size: 24px;
+    }
+    
+    .contact-links {
+        align-items: flex-start;
+        gap: var(--spacing-lg);
+    }
+    
+    .contact-link {
+        font-size: 14px;
+    }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .app-bar-container {
+        padding: var(--spacing-md) var(--spacing-lg);
+    }
+    
+    .user-card-container,
+    .current-status-container,
+    .projects-container,
+    .tools-container {
+        padding: 0 var(--spacing-lg);
+    }
+    
+    .user-card {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--spacing-xl);
+    }
+    
+    .user-avatar img {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .project-card {
+        flex-direction: column;
+    }
+    
+    .project-image {
+        height: 250px;
+    }
+    
+    .tools-grid {
+        justify-content: center;
+    }
+    
+    .contact-links {
+        align-items: flex-start;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .app-bar-container {
+        padding: var(--spacing-md) var(--spacing-xl);
+    }
+    
+    .user-card-container,
+    .current-status-container,
+    .projects-container,
+    .tools-container {
+        padding: 0 var(--spacing-xl);
+    }
+    
+    .user-card {
+        gap: var(--spacing-xl);
+    }
+    
+    .project-card {
+        flex-direction: row;
+    }
+    
+    .project-image {
+        height: 300px;
+    }
+    
+    .tools-grid {
+        justify-content: flex-start;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .app-bar-container {
+        padding: var(--spacing-md) var(--spacing-xl);
+    }
+    
+    .user-card-container,
+    .current-status-container,
+    .projects-container,
+    .tools-container {
+        padding: 0 var(--spacing-xl);
+    }
+    
+    .user-card {
+        gap: var(--spacing-xxl);
+    }
+    
+    .project-card {
+        flex-direction: row;
+    }
+    
+    .project-image {
+        height: 350px;
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .app-bar-container {
+        padding: var(--spacing-md) calc(18% + var(--spacing-xl));
+    }
+    
+    .user-card-container {
+        padding: 0 calc(18% + var(--spacing-xl));
+    }
+    
+    .current-status-container {
+        padding: 0 calc(18% + var(--spacing-xl));
+    }
+    
+    .projects-container {
+        padding: 0 calc(18% + var(--spacing-xl));
+    }
+    
+    .tools-container {
+        padding: 0 calc(18% + var(--spacing-xl));
+    }
+    
+    .contact-container {
+        padding: 0 calc(18% + var(--spacing-xl));
+    }
+    
+    .user-card {
+        gap: var(--spacing-xxl);
+    }
+    
+    .project-card {
+        flex-direction: row;
+    }
+    
+    .project-image {
+        height: 400px;
+    }
+}
+
+/* Landscape orientation adjustments */
+@media (orientation: landscape) and (max-height: 600px) {
+    .user-card {
+        min-height: 280px;
+    }
+    
+    .user-avatar img {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .project-image {
+        height: 250px;
+    }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .user-avatar img,
+    .project-image img {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* Print styles */
+@media print {
+    .app-bar {
+        position: static;
+    }
+    
+    .nav-links {
+        display: none;
+    }
+    
+    .project-buttons {
+        display: none;
+    }
+    
+    .contact-section {
+        background-color: transparent !important;
+        color: #000 !important;
+    }
+    
+    .contact-link {
+        color: #000 !important;
+    }
+    
+    .contact-link span {
+        color: #000 !important;
+    }
+} 
