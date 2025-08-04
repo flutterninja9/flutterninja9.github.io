@@ -4,12 +4,16 @@ class PortfolioApp {
         this.dataService = dataService;
         this.components = components;
         this.isInitialized = false;
+        this.darkMode = false;
     }
 
     // Initialize the application
     async init() {
         try {
             console.log('Initializing Portfolio App...');
+            
+            // Initialize dark mode
+            this.initDarkMode();
             
             // Show loading overlay
             this.components.showLoading();
@@ -34,6 +38,40 @@ class PortfolioApp {
             this.components.hideLoading();
             this.components.showError('Failed to load portfolio data. Please refresh the page.');
         }
+    }
+
+    // Initialize dark mode
+    initDarkMode() {
+        // Check for saved dark mode preference or default to light mode
+        const savedDarkMode = localStorage.getItem('darkMode');
+        this.darkMode = savedDarkMode === 'true';
+        
+        // Apply dark mode if enabled
+        if (this.darkMode) {
+            document.documentElement.classList.add('dark');
+        }
+        
+        // Add dark mode toggle functionality
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', () => {
+                this.toggleDarkMode();
+            });
+        }
+    }
+
+    // Toggle dark mode
+    toggleDarkMode() {
+        this.darkMode = !this.darkMode;
+        
+        if (this.darkMode) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        
+        // Save preference
+        localStorage.setItem('darkMode', this.darkMode.toString());
     }
 
     // Load all data from Firebase

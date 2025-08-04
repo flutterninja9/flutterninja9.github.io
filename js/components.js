@@ -6,11 +6,13 @@ class Components {
 
     // Show/hide loading overlay
     showLoading() {
-        this.loadingOverlay.classList.add('show');
+        this.loadingOverlay.classList.remove('opacity-0', 'invisible');
+        this.loadingOverlay.classList.add('opacity-100', 'visible');
     }
 
     hideLoading() {
-        this.loadingOverlay.classList.remove('show');
+        this.loadingOverlay.classList.add('opacity-0', 'invisible');
+        this.loadingOverlay.classList.remove('opacity-100', 'visible');
     }
 
     // Update user card
@@ -78,20 +80,20 @@ class Components {
     // Create project card element
     createProjectCard(project) {
         const card = document.createElement('div');
-        card.className = 'project-card';
+        card.className = 'flex items-center bg-card rounded-lg overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex-col lg:flex-row';
         card.style.backgroundColor = project.backgroundColor;
 
         card.innerHTML = `
-            <div class="project-image">
-                <img src="${project.screenShotUrl}" alt="${project.name} Screenshot" loading="lazy">
+            <div class="flex-1 max-w-[450px] h-[250px] lg:h-[400px] overflow-hidden">
+                <img src="${project.screenShotUrl}" alt="${project.name} Screenshot" loading="lazy" class="w-full h-full object-cover">
             </div>
-            <div class="project-content">
-                <h3 class="project-title">${project.name}</h3>
-                <div class="project-divider"></div>
-                <p class="project-description">${project.description}</p>
-                <div class="project-buttons">
-                    <a href="${project.deployedLink}" class="project-btn" target="_blank" rel="noopener noreferrer">Live</a>
-                    <a href="${project.gitHubLink}" class="project-btn" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <div class="flex-1 max-w-[450px] p-8 lg:p-12 bg-canvas dark:bg-dark-canvas">
+                <h3 class="font-bebas text-xl lg:text-2xl text-primary-dark dark:text-dark-text text-center mb-4">${project.name}</h3>
+                <div class="w-5 h-0.5 bg-primary-dark dark:bg-dark-text mx-auto mb-8"></div>
+                <p class="font-dm-sans text-sm lg:text-base text-primary-dark dark:text-dark-text-light text-center mb-8 leading-relaxed">${project.description}</p>
+                <div class="flex justify-evenly gap-4 flex-col sm:flex-row">
+                    <a href="${project.deployedLink}" class="px-5 py-3 bg-primary text-canvas border-none rounded-sm font-roboto text-sm font-medium cursor-pointer transition-all duration-300 hover:bg-primary-dark hover:-translate-y-1 text-center" target="_blank" rel="noopener noreferrer">Live</a>
+                    <a href="${project.gitHubLink}" class="px-5 py-3 bg-primary text-canvas border-none rounded-sm font-roboto text-sm font-medium cursor-pointer transition-all duration-300 hover:bg-primary-dark hover:-translate-y-1 text-center" target="_blank" rel="noopener noreferrer">GitHub</a>
                 </div>
             </div>
         `;
@@ -116,12 +118,12 @@ class Components {
     // Create tool card element
     createToolCard(tool) {
         const card = document.createElement('div');
-        card.className = 'tool-card';
+        card.className = 'w-20 h-20 sm:w-24 sm:h-24 bg-card rounded-md flex flex-col items-center justify-center p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300';
         card.style.backgroundColor = tool.color;
 
         card.innerHTML = `
-            <div class="tool-icon" style="color: ${tool.labelColor}">${tool.name.charAt(0)}</div>
-            <div class="tool-name" style="color: ${tool.labelColor}">${tool.name}</div>
+            <div class="font-ubuntu text-2xl sm:text-3xl font-black leading-tight" style="color: ${tool.labelColor}">${tool.name.charAt(0)}</div>
+            <div class="font-ubuntu text-xs font-normal leading-tight text-center" style="color: ${tool.labelColor}">${tool.name}</div>
         `;
 
         return card;
@@ -167,14 +169,14 @@ class Components {
     // Create contact link element
     createContactLink(contact) {
         const link = document.createElement('a');
-        link.className = 'contact-link';
+        link.className = 'flex items-center gap-4 text-white hover:text-primary transition-colors duration-300';
         link.href = contact.url;
         link.target = '_blank';
         link.rel = 'noopener noreferrer';
 
         link.innerHTML = `
-            <i class="${contact.icon}"></i>
-            <span>${contact.label}</span>
+            <i class="${contact.icon} text-lg w-5 text-center"></i>
+            <span class="font-lato text-base font-normal text-white">${contact.label}</span>
         `;
 
         link.addEventListener('click', (e) => {
