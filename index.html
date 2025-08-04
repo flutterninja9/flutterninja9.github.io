@@ -76,22 +76,57 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     
     <!-- Custom CSS (backed up in backup/styles/) -->
+    <style>
+        /* Enhanced frosted glass effect */
+        @supports (backdrop-filter: blur(20px)) {
+            .backdrop-blur-xl {
+                backdrop-filter: blur(20px) saturate(180%);
+                -webkit-backdrop-filter: blur(20px) saturate(180%);
+            }
+        }
+        
+        /* Fallback for browsers that don't support backdrop-filter */
+        @supports not (backdrop-filter: blur(20px)) {
+            .backdrop-blur-xl {
+                background-color: rgba(255, 255, 255, 0.9);
+            }
+            
+            .dark .backdrop-blur-xl {
+                background-color: rgba(18, 18, 18, 0.9);
+            }
+        }
+        
+        /* Smooth scrolling for better mobile experience */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Better touch targets for mobile */
+        @media (max-width: 640px) {
+            .project-btn {
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 <body class="bg-canvas dark:bg-dark-canvas text-text dark:text-dark-text transition-colors duration-300">
     <!-- App Bar -->
-    <header class="sticky top-0 z-50 bg-canvas dark:bg-dark-canvas border-b border-divider dark:border-dark-divider">
-        <div class="max-w-7xl mx-auto px-5 py-3 flex justify-between items-center">
+    <header class="sticky top-0 z-50 bg-canvas/40 dark:bg-dark-canvas/40 backdrop-blur-xl border-b border-divider/30 dark:border-dark-divider/30">
+        <div class="max-w-5xl mx-auto px-5 py-3 flex justify-between items-center">
             <div class="flex items-center gap-4">
-                <div class="font-anton text-2xl font-medium tracking-wider text-primary-dark px-2 py-1 border-2 border-primary-dark">
-                    TFN
+                <div class="font-anton text-2xl font-medium tracking-wider text-primary-dark dark:text-dark-text px-2 py-1 border-2 border-primary-dark dark:border-dark-text">
+                    B.B.I
                 </div>
-                <span class="font-roboto font-light text-lg tracking-wide text-primary-dark hidden sm:block">
-                    The Flutter Ninja
+                <span class="font-roboto font-light text-lg tracking-wide text-primary-dark dark:text-dark-text hidden sm:block">
+                    Anirudh Singh
                 </span>
             </div>
             <nav class="flex gap-4 items-center">
-                <a href="#" class="font-roboto font-medium text-base text-text hover:text-primary transition-colors duration-300" id="github-link">GitHub</a>
-                <a href="#" class="font-roboto font-medium text-base text-text hover:text-primary transition-colors duration-300" id="contact-link">Contact</a>
+                <a href="#" class="font-roboto font-medium text-base text-text dark:text-dark-text hover:text-primary dark:hover:text-dark-text transition-colors duration-300" id="github-link">GitHub</a>
+                <a href="#" class="font-roboto font-medium text-base text-text dark:text-dark-text hover:text-primary dark:hover:text-dark-text transition-colors duration-300" id="contact-link">Contact</a>
                 <button id="dark-mode-toggle" class="ml-4 p-2 rounded-md bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300">
                     <i class="fas fa-moon dark:hidden"></i>
                     <i class="fas fa-sun hidden dark:block text-yellow-400"></i>
@@ -105,15 +140,15 @@
     <!-- Main Content -->
     <main>
         <!-- User Card Section -->
-        <section class="py-12">
-            <div class="max-w-7xl mx-auto px-5">
+        <section class="py-8 sm:py-12">
+            <div class="max-w-5xl mx-auto px-5">
                 <div class="flex items-center gap-6 sm:gap-8 min-h-[280px] sm:min-h-[340px] flex-col sm:flex-row sm:text-left text-center">
                     <div class="flex-shrink-0">
-                        <img id="user-avatar" src="" alt="Profile Picture" class="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover border-2 border-primary-dark">
+                        <img id="user-avatar" src="" alt="Profile Picture" class="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 rounded-full object-cover border-2 border-primary-dark">
                     </div>
                     <div class="flex-1">
-                        <h1 id="user-greeting" class="font-roboto text-xl sm:text-2xl font-bold text-text mb-4">Hi! My name is Anirudh Singh</h1>
-                        <p id="user-bio" class="font-roboto text-sm sm:text-base font-medium leading-relaxed text-text">Loading...</p>
+                        <h1 id="user-greeting" class="font-roboto text-xl sm:text-2xl font-bold text-text dark:text-dark-text mb-4">Hi! My name is Anirudh Singh</h1>
+                        <p id="user-bio" class="font-roboto text-sm sm:text-base font-medium leading-relaxed text-text dark:text-dark-text">Loading...</p>
                     </div>
                 </div>
             </div>
@@ -121,45 +156,45 @@
         
         <!-- Current Status Section -->
         <section class="py-12">
-            <div class="max-w-7xl mx-auto px-5">
-                <h2 class="font-roboto text-xl sm:text-2xl font-bold text-text mb-4">What I'm Doing Now</h2>
+            <div class="max-w-5xl mx-auto px-5">
+                <h2 class="font-roboto text-xl sm:text-2xl font-bold text-text dark:text-dark-text mb-4">What I'm Doing Now</h2>
                 <div class="flex flex-col gap-3">
                     <div class="flex items-center gap-4">
-                        <i class="fas fa-home text-primary-dark text-base w-5 text-center"></i>
-                        <span class="font-roboto text-sm sm:text-base font-normal leading-relaxed text-text">Living in <strong id="user-city" class="font-semibold">Loading...</strong></span>
+                        <i class="fas fa-home text-primary-dark text-base w-5 text-center dark:text-dark-text"></i>
+                        <span class="font-roboto text-sm sm:text-base font-normal leading-relaxed text-text dark:text-dark-text">Living in <strong id="user-city" class="font-semibold">Loading...</strong></span>
                     </div>
                     <div class="flex items-center gap-4">
-                        <i class="fas fa-briefcase text-primary-dark text-base w-5 text-center"></i>
-                        <span class="font-roboto text-sm sm:text-base font-normal leading-relaxed text-text">Working for <strong id="user-company" class="font-semibold">Loading...</strong></span>
+                        <i class="fas fa-briefcase text-primary-dark dark:text-dark-text text-base w-5 text-center"></i>
+                        <span class="font-roboto text-sm sm:text-base font-normal leading-relaxed text-text dark:text-dark-text">Working for <strong id="user-company" class="font-semibold">Loading...</strong></span>
                     </div>
                     <div class="flex items-center gap-4">
-                        <i class="fas fa-clock text-primary-dark text-base w-5 text-center"></i>
-                        <span class="font-roboto text-sm sm:text-base font-normal leading-relaxed text-text">Developing <strong id="user-project" class="font-semibold">Loading...</strong></span>
+                        <i class="fas fa-clock text-primary-dark dark:text-dark-text text-base w-5 text-center"></i>
+                        <span class="font-roboto text-sm sm:text-base font-normal leading-relaxed text-text dark:text-dark-text"><strong id="user-project" class="font-semibold">Loading...</strong></span>
                     </div>
                     <div class="flex items-center gap-4">
-                        <i class="fas fa-headphones text-primary-dark text-base w-5 text-center"></i>
-                        <span class="font-roboto text-sm sm:text-base font-normal leading-relaxed text-text">Get my favourites <a href="#" id="music-link" class="text-green-600 font-semibold underline hover:text-green-700 transition-colors duration-300">here</a></span>
+                        <i class="fas fa-headphones text-primary-dark dark:text-dark-text text-base w-5 text-center"></i>
+                        <span class="font-roboto text-sm sm:text-base font-normal leading-relaxed text-text dark:text-dark-text">Get my favourites <a href="#" id="music-link" class="text-green-600 font-semibold underline hover:text-green-700 transition-colors duration-300">here</a></span>
                     </div>
                 </div>
             </div>
         </section>
         
         <!-- Projects Section -->
-        <section class="py-12">
-            <div class="max-w-7xl mx-auto px-5">
-                <div class="mb-12">
-                    <h2 class="font-roboto text-xl sm:text-2xl font-bold text-text">My Projects</h2>
+        <section class="py-8 sm:py-12">
+            <div class="max-w-5xl mx-auto px-5">
+                <div class="mb-8 sm:mb-12">
+                    <h2 class="font-roboto text-xl sm:text-2xl font-bold text-text dark:text-dark-text">My Projects</h2>
                 </div>
-                <div class="flex flex-col gap-12" id="projects-grid">
+                <div class="flex flex-col gap-8 sm:gap-12" id="projects-grid">
                     <!-- Projects will be loaded here -->
                 </div>
             </div>
         </section>
         
         <!-- Tools Section -->
-        <section class="py-12">
-            <div class="max-w-7xl mx-auto px-5">
-                <h2 class="font-roboto text-xl sm:text-2xl font-bold text-text mb-12">My Tools</h2>
+        <section class="py-8 sm:py-12">
+            <div class="max-w-5xl mx-auto px-5">
+                <h2 class="font-roboto text-xl sm:text-2xl font-bold text-text dark:text-dark-text mb-8 sm:mb-12">My Tools</h2>
                 <div class="flex flex-wrap gap-4 sm:gap-5 justify-center sm:justify-start" id="tools-grid">
                     <!-- Tools will be loaded here -->
                 </div>
@@ -168,7 +203,7 @@
         
         <!-- Contact Section -->
         <section class="bg-secondary-header py-12 mt-12">
-            <div class="max-w-7xl mx-auto px-5 text-center">
+            <div class="max-w-5xl mx-auto px-5 text-center">
                 <h2 class="font-roboto text-3xl font-bold text-white mb-12">Contact Me</h2>
                 <div class="flex flex-col items-center gap-5" id="contact-links">
                     <!-- Contact links will be loaded here -->

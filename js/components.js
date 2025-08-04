@@ -84,16 +84,16 @@ class Components {
         card.style.backgroundColor = project.backgroundColor;
 
         card.innerHTML = `
-            <div class="flex-1 max-w-[450px] h-[250px] lg:h-[400px] overflow-hidden">
-                <img src="${project.screenShotUrl}" alt="${project.name} Screenshot" loading="lazy" class="w-full h-full object-cover">
+            <div class="flex-1 max-w-[450px] h-[150px] sm:h-[180px] lg:h-[300px] overflow-hidden flex items-center justify-center">
+                <img src="${project.screenShotUrl}" alt="${project.name} Screenshot" loading="lazy" class="w-full h-full object-contain p-2 sm:p-4">
             </div>
-            <div class="flex-1 max-w-[450px] p-8 lg:p-12 bg-canvas dark:bg-dark-canvas">
-                <h3 class="font-bebas text-xl lg:text-2xl text-primary-dark dark:text-dark-text text-center mb-4">${project.name}</h3>
-                <div class="w-5 h-0.5 bg-primary-dark dark:bg-dark-text mx-auto mb-8"></div>
-                <p class="font-dm-sans text-sm lg:text-base text-primary-dark dark:text-dark-text-light text-center mb-8 leading-relaxed">${project.description}</p>
-                <div class="flex justify-evenly gap-4 flex-col sm:flex-row">
-                    <a href="${project.deployedLink}" class="px-5 py-3 bg-primary text-canvas border-none rounded-sm font-roboto text-sm font-medium cursor-pointer transition-all duration-300 hover:bg-primary-dark hover:-translate-y-1 text-center" target="_blank" rel="noopener noreferrer">Live</a>
-                    <a href="${project.gitHubLink}" class="px-5 py-3 bg-primary text-canvas border-none rounded-sm font-roboto text-sm font-medium cursor-pointer transition-all duration-300 hover:bg-primary-dark hover:-translate-y-1 text-center" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <div class="flex-1 max-w-[450px] p-4 sm:p-6 lg:p-8 bg-canvas dark:bg-dark-canvas flex flex-col justify-center">
+                <h3 class="font-bebas text-lg sm:text-xl lg:text-2xl text-primary-dark dark:text-dark-text text-center mb-3 sm:mb-4">${project.name}</h3>
+                <div class="w-5 h-0.5 bg-primary-dark dark:bg-dark-text mx-auto mb-4 sm:mb-6"></div>
+                <p class="font-dm-sans text-xs sm:text-sm lg:text-base text-primary-dark dark:text-dark-text-light text-center mb-4 sm:mb-6 leading-relaxed">${project.description}</p>
+                <div class="flex justify-evenly gap-2 sm:gap-3 flex-col sm:flex-row">
+                    <a href="${project.deployedLink}" class="px-3 py-2 sm:px-4 bg-primary text-canvas border-none rounded-sm font-roboto text-xs sm:text-sm font-medium cursor-pointer transition-all duration-300 hover:bg-primary-dark hover:-translate-y-1 text-center" target="_blank" rel="noopener noreferrer">Live</a>
+                    <a href="${project.gitHubLink}" class="px-3 py-2 sm:px-4 bg-primary text-canvas border-none rounded-sm font-roboto text-xs sm:text-sm font-medium cursor-pointer transition-all duration-300 hover:bg-primary-dark hover:-translate-y-1 text-center" target="_blank" rel="noopener noreferrer">GitHub</a>
                 </div>
             </div>
         `;
@@ -118,7 +118,7 @@ class Components {
     // Create tool card element
     createToolCard(tool) {
         const card = document.createElement('div');
-        card.className = 'w-20 h-20 sm:w-24 sm:h-24 bg-card rounded-md flex flex-col items-center justify-center p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300';
+        card.className = 'w-20 h-20 sm:w-24 sm:h-24 bg-card dark:bg-dark-card rounded-md flex flex-col items-center justify-center p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300';
         card.style.backgroundColor = tool.color;
 
         card.innerHTML = `
