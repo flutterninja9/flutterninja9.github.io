@@ -83,15 +83,27 @@ class Components {
         card.className = 'flex items-center bg-card rounded-lg overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex-col lg:flex-row';
         card.style.backgroundColor = project.backgroundColor;
 
+        // Create tags HTML if tags exist
+        const tagsHtml = project.tags && project.tags.length > 0 
+            ? `<div class="flex flex-wrap justify-center gap-1 sm:gap-2 mb-4 sm:mb-6">
+                ${project.tags.map(tag => 
+                    `<span class="px-2 py-1 text-xs bg-primary bg-opacity-10 text-primary-dark dark:text-dark-text border border-primary border-opacity-20 rounded-full font-roboto font-medium">#${tag}</span>`
+                ).join('')}
+               </div>`
+            : '';
+
         card.innerHTML = `
             <div class="flex-1 max-w-[450px] h-[150px] sm:h-[180px] lg:h-[300px] overflow-hidden flex items-center justify-center">
                 <img src="${project.screenShotUrl}" alt="${project.name} Screenshot" loading="lazy" class="w-full h-full object-contain p-2 sm:p-4">
             </div>
-            <div class="flex-1 max-w-[450px] p-4 sm:p-6 lg:p-8 bg-canvas dark:bg-dark-canvas flex flex-col justify-center">
-                <h3 class="font-bebas text-lg sm:text-xl lg:text-2xl text-primary-dark dark:text-dark-text text-center mb-3 sm:mb-4">${project.name}</h3>
-                <div class="w-5 h-0.5 bg-primary-dark dark:bg-dark-text mx-auto mb-4 sm:mb-6"></div>
-                <p class="font-dm-sans text-xs sm:text-sm lg:text-base text-primary-dark dark:text-dark-text-light text-center mb-4 sm:mb-6 leading-relaxed">${project.description}</p>
-                <div class="flex justify-evenly gap-2 sm:gap-3 flex-col sm:flex-row">
+            <div class="flex-1 max-w-[450px] min-h-[300px] lg:min-h-[300px] p-4 sm:p-6 lg:p-8 m-2 rounded-md bg-canvas dark:bg-dark-canvas flex flex-col justify-between">
+                <div class="flex flex-col items-center">
+                    <h3 class="font-bebas text-lg sm:text-xl lg:text-2xl text-primary-dark dark:text-dark-text text-center mb-3 sm:mb-4">${project.name}</h3>
+                    <div class="w-5 h-0.5 bg-primary-dark dark:bg-dark-text mx-auto mb-4 sm:mb-6"></div>
+                    <p class="font-dm-sans text-xs sm:text-sm lg:text-base text-primary-dark dark:text-dark-text-light text-center mb-4 sm:mb-6 leading-relaxed flex-grow">${project.description}</p>
+                    ${tagsHtml}
+                </div>
+                <div class="flex justify-evenly gap-2 sm:gap-3 flex-col sm:flex-row mt-auto">
                     <a href="${project.deployedLink}" class="px-3 py-2 sm:px-4 bg-primary text-canvas border-none rounded-sm font-roboto text-xs sm:text-sm font-medium cursor-pointer transition-all duration-300 hover:bg-primary-dark hover:-translate-y-1 text-center" target="_blank" rel="noopener noreferrer">Live</a>
                     <a href="${project.gitHubLink}" class="px-3 py-2 sm:px-4 bg-primary text-canvas border-none rounded-sm font-roboto text-xs sm:text-sm font-medium cursor-pointer transition-all duration-300 hover:bg-primary-dark hover:-translate-y-1 text-center" target="_blank" rel="noopener noreferrer">GitHub</a>
                 </div>

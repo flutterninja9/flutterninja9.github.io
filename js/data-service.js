@@ -80,7 +80,8 @@ class DataService {
                     screenShotUrl: data.screenShotUrl || '',
                     backgroundColor: data.backgroundColor || '#ffffff',
                     deployedLink: data.deployedLink || '',
-                    gitHubLink: data.gitHubLink || ''
+                    gitHubLink: data.gitHubLink || '',
+                    tags: data.tags || []
                 };
             });
 
