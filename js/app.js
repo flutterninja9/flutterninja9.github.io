@@ -40,38 +40,18 @@ class PortfolioApp {
         }
     }
 
-    // Initialize dark mode
+    // Initialize dark mode — delegated to inline script in index.html
     initDarkMode() {
-        // Check for saved dark mode preference or default to light mode
+        // Theme is applied by the inline script block in index.html
+        // which uses data-theme attribute. Nothing to do here.
         const savedDarkMode = localStorage.getItem('darkMode');
         this.darkMode = savedDarkMode === 'true';
-        
-        // Apply dark mode if enabled
-        if (this.darkMode) {
-            document.documentElement.classList.add('dark');
-        }
-        
-        // Add dark mode toggle functionality
-        const darkModeToggle = document.getElementById('dark-mode-toggle');
-        if (darkModeToggle) {
-            darkModeToggle.addEventListener('click', () => {
-                this.toggleDarkMode();
-            });
-        }
     }
 
     // Toggle dark mode
     toggleDarkMode() {
         this.darkMode = !this.darkMode;
-        
-        if (this.darkMode) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-        
-        // Save preference
-        localStorage.setItem('darkMode', this.darkMode.toString());
+        if (window.__themeApply) window.__themeApply(this.darkMode);
     }
 
     // Load all data from Firebase
@@ -104,27 +84,9 @@ class PortfolioApp {
         this.addRefreshButton();
     }
 
-    // Add refresh button to the app bar
+    // Add refresh button to the app bar — intentionally empty, button removed from UI
     addRefreshButton() {
-        const navLinks = document.querySelector('.nav-links');
-        if (navLinks) {
-            const refreshBtn = document.createElement('button');
-            refreshBtn.className = 'nav-link';
-            refreshBtn.style.background = 'none';
-            refreshBtn.style.border = 'none';
-            refreshBtn.style.cursor = 'pointer';
-            refreshBtn.style.fontFamily = 'inherit';
-            refreshBtn.style.fontSize = 'inherit';
-            refreshBtn.style.color = 'inherit';
-            refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh';
-            refreshBtn.title = 'Refresh data (Ctrl+R)';
-            
-            refreshBtn.addEventListener('click', () => {
-                this.refreshData();
-            });
-
-            navLinks.appendChild(refreshBtn);
-        }
+        // Refresh is available via Ctrl+R (keyboard shortcut) only
     }
 
     // Refresh data

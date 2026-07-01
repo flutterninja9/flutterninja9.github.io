@@ -1,227 +1,898 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anirudh Singh</title>
-    <meta name="description" content="Be thoughtful, be kind & always be humble.">
-    
-    <!-- Google Fonts -->
+    <title>ANIRUDH SINGH // SOFTWARE ENGINEER</title>
+    <meta name="description" content="Anirudh Singh. Software engineer. Builder.">
+
+    <!-- IBM Plex: the industrial standard -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Anton&family=Bebas+Neue&family=DM+Sans:wght@400;500&family=Ubuntu:wght@400;900&family=Lato:wght@400&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome for icons -->
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#000000',
-                        'primary-dark': '#0a0909',
-                        canvas: '#ffffff',
-                        divider: '#e6e3e3',
-                        'secondary-header': '#1a1a20',
-                        card: '#e0e0e0',
-                        indicator: '#d0d0d0',
-                        text: '#272727',
-                        'text-light': '#666666',
-                        // Dark mode colors
-                        'dark-canvas': '#121212',
-                        'dark-divider': '#2e2e2e',
-                        'dark-secondary-header': '#1f1f1f',
-                        'dark-card': '#434445',
-                        'dark-text': '#ffffff',
-                        'dark-text-light': '#cccccc',
-                    },
-                    fontFamily: {
-                        'roboto': ['Roboto', 'sans-serif'],
-                        'bebas': ['Bebas Neue', 'sans-serif'],
-                        'anton': ['Anton', 'sans-serif'],
-                        'ubuntu': ['Ubuntu', 'sans-serif'],
-                        'lato': ['Lato', 'sans-serif'],
-                        'dm-sans': ['DM Sans', 'sans-serif'],
-                    },
-                    spacing: {
-                        'xs': '4px',
-                        'sm': '8px',
-                        'md': '12px',
-                        'lg': '16px',
-                        'xl': '20px',
-                        'xxl': '30px',
-                        'xxxl': '45px',
-                    },
-                    borderRadius: {
-                        'sm': '4px',
-                        'md': '8px',
-                        'lg': '12px',
-                    },
-                    boxShadow: {
-                        'sm': '0 1px 3px rgba(0, 0, 0, 0.1)',
-                        'md': '0 4px 6px rgba(0, 0, 0, 0.1)',
-                        'lg': '0 10px 15px rgba(0, 0, 0, 0.1)',
-                    }
-                }
-            },
-            darkMode: 'class'
-        }
-    </script>
-    
-    <!-- Firebase SDK -->
+
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-    
-    <!-- Custom CSS (backed up in backup/styles/) -->
+
     <style>
-        /* Enhanced frosted glass effect */
-        @supports (backdrop-filter: blur(20px)) {
-            .backdrop-blur-xl {
-                backdrop-filter: blur(20px) saturate(180%);
-                -webkit-backdrop-filter: blur(20px) saturate(180%);
-            }
+        /* ═══════════════════════════════════════════════════════════
+           UTILITARIAN DESIGN SYSTEM
+           Function-first. No ornament. Every element earns its place.
+        ═══════════════════════════════════════════════════════════ */
+
+        :root {
+            --bg:         #ECEAE4;
+            --bg-2:       #E0DDD6;
+            --bg-3:       #D4D0C8;
+            --fg:         #111110;
+            --fg-2:       #2E2C28;
+            --fg-3:       #4A4840;
+            --fg-4:       #6A6860;
+            --border:     #C0BCB4;
+            --border-2:   #A09C94;
+            --orange:     #C84C00;   /* single accent — safety orange */
+            --orange-dim: #7A2E00;
+            --green-ok:   #2A5C2A;
+            --mono:       'IBM Plex Mono', 'Courier New', monospace;
+            --sans:       'IBM Plex Sans', system-ui, sans-serif;
+            --max-w:      960px;
+            --gap:        1px;       /* grid gap = border thickness */
         }
-        
-        /* Fallback for browsers that don't support backdrop-filter */
-        @supports not (backdrop-filter: blur(20px)) {
-            .backdrop-blur-xl {
-                background-color: rgba(255, 255, 255, 0.9);
-            }
-            
-            .dark .backdrop-blur-xl {
-                background-color: rgba(18, 18, 18, 0.9);
-            }
+
+        [data-theme="dark"] {
+            --bg:         #111110;
+            --bg-2:       #1A1918;
+            --bg-3:       #242320;
+            --fg:         #F0ECE4;
+            --fg-2:       #C8C2B8;
+            --fg-3:       #A8A49C;
+            --fg-4:       #807C78;
+            --border:     #2E2C28;
+            --border-2:   #3E3C38;
+            --orange:     #E05A00;
+            --orange-dim: #A04000;
+            --green-ok:   #3A7A3A;
         }
-        
-        /* Smooth scrolling for better mobile experience */
-        html {
-            scroll-behavior: smooth;
+
+        /* ── Reset ── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { font-size: 14px; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--mono);
+            background: var(--bg);
+            color: var(--fg);
+            line-height: 1.6;
+            transition: background 0.2s, color 0.2s;
         }
-        
-        /* Better touch targets for mobile */
-        @media (max-width: 640px) {
-            .project-btn {
-                min-height: 44px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
+
+        /* ── UTILITY ── */
+        .u-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--fg-3);
+        }
+
+        .u-orange { color: var(--orange); }
+        .u-muted  { color: var(--fg-3); }
+
+        /* ── STATUS BAR (top of page) ── */
+        .status-bar {
+            background: var(--fg);
+            color: var(--bg);
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            padding: 5px 0;
+            border-bottom: var(--gap) solid var(--orange);
+        }
+        .status-bar-inner {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0.75;
+        }
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            background: var(--orange);
+            display: inline-block;
+            animation: blink 2s step-end infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0.2; }
+        }
+
+        /* ── HEADER / NAV ── */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg);
+            border-bottom: var(--gap) solid var(--border);
+        }
+
+        .nav-inner {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .nav-logo {
+            font-family: var(--mono);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            color: var(--fg);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-logo-prefix { color: var(--orange); font-weight: 400; }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            list-style: none;
+            border-left: 1px solid var(--border);
+        }
+
+        .nav-links li {
+            border-right: 1px solid var(--border);
+        }
+
+        .nav-links a {
+            display: block;
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--fg-3);
+            text-decoration: none;
+            padding: 0 16px;
+            height: 52px;
+            line-height: 52px;
+            transition: background 0.1s, color 0.1s;
+        }
+        .nav-links a:hover {
+            background: var(--bg-2);
+            color: var(--fg);
+        }
+        .nav-links a.active {
+            color: var(--orange);
+        }
+
+        #theme-toggle {
+            display: block;
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--fg-3);
+            text-decoration: none;
+            padding: 0 16px;
+            height: 52px;
+            line-height: 52px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            border-right: 1px solid var(--border);
+            transition: background 0.1s, color 0.1s;
+        }
+        #theme-toggle:hover { background: var(--bg-2); color: var(--fg); }
+
+        /* ── CONTAINER ── */
+        .container {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ── SECTION HEADER ── */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 0;
+        }
+
+        .section-number {
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--orange);
+            padding: 10px 16px;
+            border-right: 1px solid var(--border);
+            letter-spacing: 0.06em;
+            white-space: nowrap;
+        }
+
+        .section-title {
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--fg-2);
+            padding: 10px 16px;
+            flex: 1;
+        }
+
+        .section-meta {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--fg-4);
+            padding: 10px 16px;
+            border-left: 1px solid var(--border);
+            letter-spacing: 0.08em;
+            white-space: nowrap;
+        }
+
+        /* ── HERO / IDENTITY ── */
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            border: 1px solid var(--border);
+            border-top: none;
+        }
+
+        /* Avatar cell */
+        .hero-avatar-cell {
+            border-right: 1px solid var(--border);
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+            background: var(--bg-2);
+        }
+
+        #user-avatar {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border: 1px solid var(--border-2);
+            display: block;
+            filter: saturate(0.7) contrast(1.1);
+        }
+
+        .avatar-id-block {
+            border: 1px solid var(--border);
+            padding: 8px 10px;
+            width: 100%;
+        }
+        .avatar-id-label { font-size: 9px; color: var(--fg-4); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 2px; }
+        .avatar-id-value { font-size: 11px; font-weight: 600; color: var(--fg); }
+
+        /* Bio cell */
+        .hero-bio-cell {
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .hero-designation {
+            font-family: var(--mono);
+            font-size: clamp(22px, 3vw, 32px);
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            line-height: 1.15;
+            color: var(--fg);
+        }
+        .hero-designation span { color: var(--orange); }
+
+        .hero-bio {
+            font-family: var(--sans);
+            font-size: 14px;
+            font-weight: 300;
+            color: var(--fg-2);
+            line-height: 1.8;
+            max-width: 520px;
+        }
+
+        /* ── STATUS TABLE (Now section) ── */
+        .status-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid var(--border);
+            border-top: none;
+        }
+
+        .status-table tr {
+            border-bottom: 1px solid var(--border);
+        }
+        .status-table tr:last-child { border-bottom: none; }
+        .status-table tr:hover td { background: var(--bg-2); }
+
+        .status-table td {
+            padding: 13px 16px;
+            vertical-align: middle;
+        }
+
+        .status-key {
+            font-family: var(--mono);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--fg-4);
+            width: 180px;
+            white-space: nowrap;
+        }
+
+        .status-sep {
+            color: var(--border-2);
+            width: 24px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .status-val {
+            font-family: var(--mono);
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--fg);
+        }
+
+        .status-val a {
+            color: var(--orange);
+            text-decoration: none;
+            border-bottom: 1px solid var(--orange-dim);
+            transition: border-color 0.15s;
+        }
+        .status-val a::before { content: '> '; opacity: 0.5; }
+        .status-val a:hover { border-color: var(--orange); }
+
+        /* ── BADGE / STATUS TAG ── */
+        .badge {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            padding: 2px 7px;
+            border: 1px solid;
+        }
+        .badge-ok     { color: var(--green-ok); border-color: var(--green-ok); }
+        .badge-active { color: var(--orange);   border-color: var(--orange); }
+        .badge-muted  { color: var(--fg-4);     border-color: var(--border); }
+
+        /* ── PROJECTS TABLE ── */
+        .projects-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid var(--border);
+            border-top: none;
+        }
+
+        .projects-table thead tr {
+            background: var(--bg-3);
+            border-bottom: 2px solid var(--border-2);
+        }
+
+        .projects-table th {
+            font-family: var(--mono);
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--fg-4);
+            padding: 10px 16px;
+            text-align: left;
+            border-right: 1px solid var(--border);
+        }
+        .projects-table th:last-child { border-right: none; }
+
+        .projects-table tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: background 0.1s;
+        }
+        .projects-table tbody tr:last-child { border-bottom: none; }
+        .projects-table tbody tr:hover { background: var(--bg-2); }
+
+        .projects-table td {
+            padding: 16px;
+            vertical-align: top;
+            border-right: 1px solid var(--border);
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--fg-2);
+        }
+        .projects-table td:last-child { border-right: none; }
+
+        .td-id {
+            color: var(--fg-4);
+            font-size: 11px;
+            white-space: nowrap;
+            width: 60px;
+        }
+
+        .td-name {
+            font-weight: 600;
+            color: var(--fg);
+            font-size: 13px;
+        }
+
+        .td-desc {
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 300;
+            line-height: 1.7;
+            color: var(--fg-2);
+            min-width: 200px;
+        }
+
+        .td-tags {
+            width: 160px;
+        }
+
+        .td-tags .badge { margin: 2px 2px 2px 0; }
+
+        .td-actions {
+            width: 120px;
+            white-space: nowrap;
+        }
+
+        .link-action {
+            display: block;
+            font-family: var(--mono);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--fg-3);
+            text-decoration: none;
+            padding: 5px 0;
+            border-bottom: 1px solid var(--border);
+            transition: color 0.1s;
+        }
+        .link-action:last-child { border-bottom: none; }
+        .link-action::before { content: '→ '; color: var(--orange); }
+        .link-action:hover { color: var(--fg); }
+
+        /* ── TOOLS GRID ── */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: var(--gap);
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-top: none;
+        }
+
+        .tool-cell {
+            background: var(--bg);
+            padding: 14px 16px;
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--fg-2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.1s, color 0.1s;
+            cursor: default;
+        }
+        .tool-cell:hover { background: var(--bg-2); color: var(--fg); }
+
+        .tool-cell::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: var(--border-2);
+            flex-shrink: 0;
+            transition: background 0.1s;
+        }
+        .tool-cell:hover::before { background: var(--orange); }
+
+        /* ── CONTACT TABLE ── */
+        .contact-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid var(--border);
+            border-top: none;
+        }
+
+        .contact-table tr {
+            border-bottom: 1px solid var(--border);
+            transition: background 0.1s;
+        }
+        .contact-table tr:last-child { border-bottom: none; }
+        .contact-table tr:hover { background: var(--bg-2); }
+
+        .contact-table td {
+            padding: 15px 16px;
+            vertical-align: middle;
+            border-right: 1px solid var(--border);
+            font-family: var(--mono);
+            font-size: 12px;
+        }
+        .contact-table td:last-child { border-right: none; }
+
+        .td-channel {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--fg-4);
+            width: 120px;
+            white-space: nowrap;
+        }
+
+        .td-handle {
+            color: var(--fg-2);
+            font-size: 13px;
+        }
+
+        .td-contact-link a {
+            font-family: var(--mono);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--orange);
+            text-decoration: none;
+            padding: 4px 10px;
+            border: 1px solid var(--orange-dim);
+            transition: background 0.1s, border-color 0.1s;
+            white-space: nowrap;
+        }
+        .td-contact-link a::before { content: '→ '; }
+        .td-contact-link a:hover { background: var(--orange); color: var(--bg); border-color: var(--orange); }
+
+        /* ── FOOTER ── */
+        .site-footer {
+            border-top: 2px solid var(--border-2);
+            margin-top: 64px;
+        }
+
+        .footer-bar {
+            background: var(--bg-2);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .footer-inner {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footer-sig {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--fg-3);
+        }
+        .footer-sig span { color: var(--fg-2); font-weight: 500; }
+
+        .footer-motto {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--fg-4);
+            font-style: italic;
+        }
+
+        /* ── SECTION SPACING ── */
+        .section { padding: 48px 0 0; }
+
+        /* ── LOADING ── */
+        #loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            gap: 16px;
+            opacity: 1;
+            transition: opacity 0.3s;
+        }
+        #loading-overlay.hidden { opacity: 0; pointer-events: none; }
+
+        .loading-block {
+            width: 48px;
+            height: 48px;
+            background: var(--fg);
+            position: relative;
+            overflow: hidden;
+        }
+        .loading-block::after {
+            content: '';
+            position: absolute;
+            left: 0; top: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--orange);
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: loadFill 1s ease-in-out infinite;
+        }
+        @keyframes loadFill {
+            0%   { transform: scaleX(0); }
+            50%  { transform: scaleX(1); }
+            100% { transform: scaleX(0); transform-origin: right; }
+        }
+
+        .loading-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--fg-4);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 720px) {
+            .hero-grid { grid-template-columns: 1fr; }
+            .hero-avatar-cell { border-right: none; border-bottom: 1px solid var(--border); padding: 24px; flex-direction: row; align-items: center; }
+            #user-avatar { width: 80px; }
+            .projects-table .td-tags,
+            .projects-table .td-desc { display: none; }
+            .status-key { width: 120px; }
+            .nav-links li:not(:last-child):not(:nth-last-child(2)) a { display: none; }
+            .tools-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+            .contact-table .td-handle { display: none; }
         }
     </style>
 </head>
-<body class="bg-canvas dark:bg-dark-canvas text-text dark:text-dark-text transition-colors duration-300">
-    <!-- App Bar -->
-    <header class="sticky top-0 z-50 bg-canvas/40 dark:bg-dark-canvas/40 backdrop-blur-xl border-b border-divider/30 dark:border-dark-divider/30">
-        <div class="max-w-5xl mx-auto px-5 py-3 flex justify-between items-center">
-            <div class="flex items-center gap-4">
-                <div class="font-anton text-2xl font-medium tracking-wider text-primary-dark dark:text-dark-text px-2 py-1 border-2 border-primary-dark dark:border-dark-text">
-                    A.S
-                </div>
-                <span class="font-roboto font-light text-lg tracking-wide text-primary-dark dark:text-dark-text hidden sm:block">
-                    Anirudh Singh
-                </span>
+<body>
+
+    <!-- Loading -->
+    <div id="loading-overlay">
+        <div class="loading-block"></div>
+        <div class="loading-label">Initializing</div>
+    </div>
+
+    <!-- ── Status bar ── -->
+    <div class="status-bar">
+        <div class="status-bar-inner">
+            <div class="status-item">
+                <span class="status-dot"></span>
+                SYSTEM: ONLINE
             </div>
-            <nav class="flex gap-4 items-center">
-                <a href="https://blog.anirudhsingh.in" class="font-roboto font-medium text-base text-text dark:text-dark-text hover:text-primary dark:hover:text-dark-text transition-colors duration-300" id="blog-link">Read articles</a>
-                <a href="#" class="font-roboto font-medium text-base text-text dark:text-dark-text hover:text-primary dark:hover:text-dark-text transition-colors duration-300" id="github-link">GitHub</a>
-                <a href="#" class="font-roboto font-medium text-base text-text dark:text-dark-text hover:text-primary dark:hover:text-dark-text transition-colors duration-300" id="contact-link">Contact</a>
-                <button id="dark-mode-toggle" class="ml-4 p-2 rounded-md bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300">
-                    <i class="fas fa-moon dark:hidden"></i>
-                    <i class="fas fa-sun hidden dark:block text-yellow-400"></i>
-                </button>
+            <div class="status-item">
+                BUILD: STABLE &nbsp;|&nbsp; MODE: PORTFOLIO &nbsp;|&nbsp; VER: 2.0
+            </div>
+            <div class="status-item" id="status-time">
+                <!-- populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Header ── -->
+    <header class="site-header">
+        <div class="nav-inner">
+            <a class="nav-logo" href="/" aria-label="Home">
+                <span class="nav-logo-prefix">// </span>ANIRUDH SINGH
+            </a>
+            <nav aria-label="Primary navigation">
+                <ul class="nav-links">
+                    <li><a href="https://blog.anirudhsingh.in" id="blog-link">Writing</a></li>
+                    <li><a href="#" id="github-link">GitHub</a></li>
+                    <li><a href="#contact" id="contact-link">Contact</a></li>
+                    <li><button id="theme-toggle" aria-label="Toggle theme">[ THEME ]</button></li>
+                </ul>
             </nav>
         </div>
     </header>
-    
-    <div class="h-px bg-divider dark:bg-dark-divider"></div>
-    
-    <!-- Main Content -->
+
     <main>
-        <!-- User Card Section -->
-        <section class="py-8 sm:py-12">
-            <div class="max-w-5xl mx-auto px-5">
-                <div class="flex items-center gap-6 sm:gap-8 min-h-[280px] sm:min-h-[340px] flex-col sm:flex-row sm:text-left text-center">
-                    <div class="flex-shrink-0">
-                        <img id="user-avatar" src="" alt="Profile Picture" class="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 rounded-full object-cover border-2 border-primary-dark">
-                    </div>
-                    <div class="flex-1">
-                        <h1 id="user-greeting" class="font-roboto text-xl sm:text-2xl font-bold text-text dark:text-dark-text mb-4">Hi! My name is Anirudh Singh</h1>
-                        <p id="user-bio" class="font-roboto text-sm sm:text-base font-medium leading-relaxed text-text dark:text-dark-text">Loading...</p>
-                    </div>
+
+        <!-- ── [00] IDENTITY ── -->
+        <section class="section" aria-labelledby="identity-title">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-number">[00]</span>
+                    <span class="section-title" id="identity-title">IDENTITY</span>
+                    <span class="section-meta">DESIGNATION: ENGINEER / BUILDER</span>
                 </div>
-            </div>
-        </section>
-        
-        <!-- Current Status Section -->
-        <section class="py-12">
-            <div class="max-w-5xl mx-auto px-5">
-                <h2 class="font-roboto text-xl sm:text-2xl font-bold text-text dark:text-dark-text mb-4">What I'm Doing Now</h2>
-                <div class="flex flex-col gap-3">
-                    <div class="flex items-center gap-4">
-                        <i class="fas fa-home text-primary-dark text-base w-5 text-center dark:text-dark-text"></i>
-                        <span class="font-roboto text-sm sm:text-base font-normal leading-relaxed text-text dark:text-dark-text">Living in <strong id="user-city" class="font-semibold">Loading...</strong></span>
+                <div class="hero-grid">
+                    <div class="hero-avatar-cell">
+                        <img id="user-avatar" src="" alt="Anirudh Singh">
+                        <div class="avatar-id-block">
+                            <div class="avatar-id-label">ID</div>
+                            <div class="avatar-id-value">A.SINGH.001</div>
+                        </div>
+                        <div class="avatar-id-block">
+                            <div class="avatar-id-label">Status</div>
+                            <div class="avatar-id-value"><span class="badge badge-ok">ACTIVE</span></div>
+                        </div>
                     </div>
-                    <div class="flex items-center gap-4">
-                        <i class="fas fa-briefcase text-primary-dark dark:text-dark-text text-base w-5 text-center"></i>
-                        <span class="font-roboto text-sm sm:text-base font-normal leading-relaxed text-text dark:text-dark-text">Working for <strong id="user-company" class="font-semibold">Loading...</strong></span>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <i class="fas fa-clock text-primary-dark dark:text-dark-text text-base w-5 text-center"></i>
-                        <span class="font-roboto text-sm sm:text-base font-normal leading-relaxed text-text dark:text-dark-text"><strong id="user-project" class="font-semibold">Loading...</strong></span>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <i class="fas fa-headphones text-primary-dark dark:text-dark-text text-base w-5 text-center"></i>
-                        <span class="font-roboto text-sm sm:text-base font-normal leading-relaxed text-text dark:text-dark-text">Get my favourites <a href="#" id="music-link" class="text-green-600 font-semibold underline hover:text-green-700 transition-colors duration-300">here</a></span>
+                    <div class="hero-bio-cell">
+                        <div class="hero-designation" id="user-greeting">
+                            ANIRUDH<br>SINGH
+                        </div>
+                        <p class="hero-bio" id="user-bio">Loading…</p>
                     </div>
                 </div>
             </div>
         </section>
-        
-        <!-- Projects Section -->
-        <section class="py-8 sm:py-12">
-            <div class="max-w-5xl mx-auto px-5">
-                <div class="mb-8 sm:mb-12">
-                    <h2 class="font-roboto text-xl sm:text-2xl font-bold text-text dark:text-dark-text">My Projects</h2>
+
+        <!-- ── [01] CURRENT STATUS ── -->
+        <section class="section" aria-labelledby="status-title">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-number">[01]</span>
+                    <span class="section-title" id="status-title">CURRENT STATUS</span>
+                    <span class="section-meta">LAST UPDATED: LIVE</span>
                 </div>
-                <div class="flex flex-col gap-8 sm:gap-12" id="projects-grid">
-                    <!-- Projects will be loaded here -->
+                <table class="status-table" role="presentation">
+                    <tbody>
+                        <tr>
+                            <td class="status-key">Location</td>
+                            <td class="status-sep">//</td>
+                            <td class="status-val"><span id="user-city">—</span></td>
+                        </tr>
+                        <tr>
+                            <td class="status-key">Employer</td>
+                            <td class="status-sep">//</td>
+                            <td class="status-val"><span id="user-company">—</span></td>
+                        </tr>
+                        <tr>
+                            <td class="status-key">Active Work</td>
+                            <td class="status-sep">//</td>
+                            <td class="status-val"><span id="user-project">—</span></td>
+                        </tr>
+                        <tr>
+                            <td class="status-key">Playlist</td>
+                            <td class="status-sep">//</td>
+                            <td class="status-val"><a href="#" id="music-link">Access stream</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ── [02] WORKS ── -->
+        <section class="section" aria-labelledby="works-title">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-number">[02]</span>
+                    <span class="section-title" id="works-title">SELECTED WORKS</span>
+                    <span class="section-meta">SORTED: RELEVANCE</span>
+                </div>
+                <table class="projects-table" id="projects-grid">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Designation</th>
+                            <th>Description</th>
+                            <th>Tags</th>
+                            <th>Links</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ── [03] STACK ── -->
+        <section class="section" aria-labelledby="tools-title">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-number">[03]</span>
+                    <span class="section-title" id="tools-title">TOOLS & INSTRUMENTS</span>
+                    <span class="section-meta">PROFICIENCY: VARIES</span>
+                </div>
+                <div class="tools-grid" id="tools-grid">
+                    <!-- Populated by JS -->
                 </div>
             </div>
         </section>
-        
-        <!-- Tools Section -->
-        <section class="py-8 sm:py-12">
-            <div class="max-w-5xl mx-auto px-5">
-                <h2 class="font-roboto text-xl sm:text-2xl font-bold text-text dark:text-dark-text mb-8 sm:mb-12">My Tools</h2>
-                <div class="flex flex-wrap gap-4 sm:gap-5 justify-center sm:justify-start" id="tools-grid">
-                    <!-- Tools will be loaded here -->
+
+        <!-- ── [04] CONTACT ── -->
+        <section class="section" id="contact" aria-labelledby="contact-title">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-number">[04]</span>
+                    <span class="section-title" id="contact-title">CONTACT CHANNELS</span>
+                    <span class="section-meta">RESPONSE TIME: REASONABLE</span>
                 </div>
+                <table class="contact-table" id="contact-links">
+                    <tbody>
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
             </div>
         </section>
-        
-        <!-- Contact Section -->
-        <section class="bg-secondary-header py-12 mt-12">
-            <div class="max-w-5xl mx-auto px-5 text-center">
-                <h2 class="font-roboto text-3xl font-bold text-white mb-12">Contact Me</h2>
-                <div class="flex flex-col items-center gap-5" id="contact-links">
-                    <!-- Contact links will be loaded here -->
-                </div>
-            </div>
-        </section>
+
     </main>
-    
-    <!-- Loading Overlay -->
-    <div class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 opacity-0 invisible transition-all duration-300" id="loading-overlay">
-        <div class="w-10 h-10 border-4 border-divider border-t-primary rounded-full animate-spin"></div>
-    </div>
-    
-    <!-- Custom JavaScript -->
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+        <div class="footer-bar">
+            <div class="footer-inner">
+                <div class="footer-sig">
+                    // <span>ANIRUDH SINGH</span> — &copy; <span id="footer-year">2024</span>
+                </div>
+                <div class="footer-motto">
+                    "be thoughtful, be kind &amp; always be humble."
+                </div>
+                <div class="footer-sig">
+                    <span class="badge badge-ok">BUILD STABLE</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
     <script src="js/firebase-config.js"></script>
     <script src="js/data-service.js"></script>
     <script src="js/components.js"></script>
     <script src="js/app.js"></script>
+
+    <script>
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+        // Live clock in status bar
+        function updateClock() {
+            const now = new Date();
+            const t = now.toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
+            const el = document.getElementById('status-time');
+            if (el) el.textContent = t;
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        // Theme
+        (function () {
+            const toggle = document.getElementById('theme-toggle');
+            const html   = document.documentElement;
+
+            function applyTheme(dark) {
+                html.setAttribute('data-theme', dark ? 'dark' : 'light');
+                toggle.textContent = dark ? '[ LIGHT ]' : '[ THEME ]';
+                localStorage.setItem('darkMode', dark);
+            }
+
+            applyTheme(localStorage.getItem('darkMode') === 'true');
+            toggle.addEventListener('click', () => applyTheme(html.getAttribute('data-theme') !== 'dark'));
+            window.__themeApply = applyTheme;
+        })();
+    </script>
 </body>
-</html> 
+</html>
