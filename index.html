@@ -62,6 +62,79 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { font-size: 14px; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
 
+        /* ── Custom selection ── */
+        ::selection { background: var(--orange); color: #fff; }
+
+        /* ── Scroll progress bar ── */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--orange);
+            z-index: 9998;
+            transition: width 0.05s linear;
+            pointer-events: none;
+        }
+
+        /* ── Typewriter cursor ── */
+        .typer-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 0.85em;
+            background: var(--orange);
+            margin-left: 4px;
+            vertical-align: middle;
+            animation: cursorBlink 1s step-end infinite;
+        }
+        @keyframes cursorBlink {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0; }
+        }
+
+        /* ── Section entrance animation ── */
+        .section {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.45s ease, transform 0.45s ease;
+        }
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── Zebra striping on tables ── */
+        .projects-table tbody tr:nth-child(even),
+        .contact-table   tbody tr:nth-child(even) {
+            background: var(--bg-2);
+        }
+        .projects-table tbody tr:nth-child(even):hover,
+        .contact-table   tbody tr:nth-child(even):hover {
+            background: var(--bg-3);
+        }
+
+        /* ── Copy flash badge ── */
+        .copy-flash {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            padding: 2px 7px;
+            border: 1px solid var(--green-ok);
+            color: var(--green-ok);
+            margin-left: 8px;
+            animation: flashIn 0.15s ease;
+        }
+        @keyframes flashIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+
+        /* ── Clickable contact rows ── */
+        .contact-table tbody tr { cursor: pointer; }
+
         body {
             font-family: var(--mono);
             background: var(--bg);
@@ -865,10 +938,13 @@
     <script src="js/components.js"></script>
     <script src="js/app.js"></script>
 
+    <!-- Scroll progress bar element -->
+    <div id="scroll-progress" aria-hidden="true"></div>
+
     <script>
         document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-        // Live clock in status bar
+        // ── Live UTC clock ────────────────────────────────────────
         function updateClock() {
             const now = new Date();
             const t = now.toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
@@ -878,21 +954,111 @@
         updateClock();
         setInterval(updateClock, 1000);
 
-        // Theme
+        // ── Theme ─────────────────────────────────────────────────
         (function () {
             const toggle = document.getElementById('theme-toggle');
             const html   = document.documentElement;
-
             function applyTheme(dark) {
                 html.setAttribute('data-theme', dark ? 'dark' : 'light');
                 toggle.textContent = dark ? '[ LIGHT ]' : '[ THEME ]';
                 localStorage.setItem('darkMode', dark);
             }
-
             applyTheme(localStorage.getItem('darkMode') === 'true');
             toggle.addEventListener('click', () => applyTheme(html.getAttribute('data-theme') !== 'dark'));
             window.__themeApply = applyTheme;
         })();
+
+        // ── Scroll progress bar ───────────────────────────────────
+        (function () {
+            const bar = document.getElementById('scroll-progress');
+            window.addEventListener('scroll', () => {
+                const scrolled = window.scrollY;
+                const total    = document.documentElement.scrollHeight - window.innerHeight;
+                bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+            }, { passive: true });
+        })();
+
+        // ── Section entrance (IntersectionObserver) ───────────────
+        (function () {
+            const sections = document.querySelectorAll('.section');
+            if (!('IntersectionObserver' in window)) {
+                sections.forEach(s => s.classList.add('visible'));
+                return;
+            }
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        e.target.classList.add('visible');
+                        io.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.08 });
+            sections.forEach(s => io.observe(s));
+        })();
+
+        // ── Typewriter on hero name ───────────────────────────────
+        // Runs after app data loads; we hook into the greeting element.
+        // If the element already has text (set by components.js),
+        // we retype it. We use a MutationObserver to catch the update.
+        (function () {
+            const el = document.getElementById('user-greeting');
+            if (!el) return;
+
+            function runTypewriter(fullText) {
+                el.innerHTML = '';
+                const cursor = document.createElement('span');
+                cursor.className = 'typer-cursor';
+                el.appendChild(cursor);
+
+                let i = 0;
+                const SPEED = 55; // ms per character
+
+                function tick() {
+                    if (i < fullText.length) {
+                        // Insert before cursor
+                        el.insertBefore(document.createTextNode(fullText[i]), cursor);
+                        i++;
+                        setTimeout(tick, fullText[i - 1] === '\n' ? SPEED * 3 : SPEED);
+                    }
+                    // cursor stays and keeps blinking after done
+                }
+                tick();
+            }
+
+            // Watch for components.js writing the name into the element
+            const observer = new MutationObserver(() => {
+                const raw = el.textContent.trim();
+                if (raw && raw !== 'Loading…') {
+                    observer.disconnect();
+                    // Small delay so the section reveal animation finishes first
+                    setTimeout(() => runTypewriter(raw), 300);
+                }
+            });
+            observer.observe(el, { childList: true, subtree: true, characterData: true });
+        })();
+
+        // ── Copy-to-clipboard on contact rows ────────────────────
+        document.addEventListener('click', function (e) {
+            const row = e.target.closest('#contact-links tbody tr');
+            if (!row) return;
+            // Don't double-fire if they click the action link directly
+            if (e.target.closest('a')) return;
+
+            const link = row.querySelector('a');
+            if (!link) return;
+            const url = link.href;
+
+            navigator.clipboard.writeText(url).then(() => {
+                // Remove any existing flash
+                row.querySelectorAll('.copy-flash').forEach(f => f.remove());
+                const flash = document.createElement('span');
+                flash.className = 'copy-flash';
+                flash.textContent = 'COPIED';
+                const handleCell = row.querySelector('.td-handle');
+                if (handleCell) handleCell.appendChild(flash);
+                setTimeout(() => flash.remove(), 2000);
+            }).catch(() => {});
+        });
     </script>
 </body>
 </html>
