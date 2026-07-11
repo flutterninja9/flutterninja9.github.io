@@ -1,4 +1,4 @@
-// Components — renders data into the Utilitarian DOM
+// Components — renders data into the clean monochromatic DOM
 class Components {
     constructor() {
         this.loadingOverlay = document.getElementById('loading-overlay');
@@ -15,134 +15,176 @@ class Components {
     // ── Identity / Hero ──────────────────────────────────────────
     updateUserCard(user) {
         const avatar   = document.getElementById('user-avatar');
-        const greeting = document.getElementById('user-greeting');
+        const nameEl   = document.getElementById('user-name');
         const bio      = document.getElementById('user-bio');
 
         if (avatar) {
-            avatar.src = user.imageUrl || '';
-            avatar.alt = user.name;
-            if (!user.imageUrl) avatar.style.display = 'none';
+            if (user.imageUrl) {
+                avatar.src = user.imageUrl;
+                avatar.alt = user.name || 'Anirudh Singh';
+            } else {
+                avatar.style.display = 'none';
+            }
         }
-        if (greeting) {
-            // Uppercase, split on space for two-line display
-            const parts = (user.name || 'ANIRUDH SINGH').toUpperCase().split(' ');
-            greeting.innerHTML = parts[0] + '<br>' + (parts.slice(1).join(' ') || '');
-        }
-        if (bio) bio.textContent = user.bio;
+        if (nameEl) nameEl.textContent = user.name || 'Anirudh Singh';
+        if (bio)    bio.textContent    = user.bio  || '';
     }
 
     // ── Current Status ───────────────────────────────────────────
     updateCurrentStatus(user) {
-        const city      = document.getElementById('user-city');
-        const company   = document.getElementById('user-company');
-        const project   = document.getElementById('user-project');
-        const musicLink = document.getElementById('music-link');
+        // Now cards
+        const nowCity    = document.getElementById('now-city');
+        const nowCompany = document.getElementById('now-company');
+        const nowProject = document.getElementById('now-project');
+        const nowMusic   = document.getElementById('now-music');
 
-        if (city)    city.textContent    = (user.city || '—').toUpperCase();
-        if (company) company.textContent = user.workingFor  || '—';
-        if (project) project.textContent = user.activeProject || '—';
+        if (nowCity)    nowCity.textContent    = user.city        || '—';
+        if (nowCompany) nowCompany.textContent = user.workingFor  || '—';
+        if (nowProject) nowProject.textContent = user.activeProject || '—';
 
-        if (musicLink && user.spotifyPlaylist) {
-            musicLink.href = user.spotifyPlaylist;
-            musicLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.openUrl(user.spotifyPlaylist);
-            });
+        if (nowMusic && user.spotifyPlaylist) {
+            nowMusic.href = user.spotifyPlaylist;
         }
+
+        // Status chips
+        const chipLocation = document.getElementById('chip-location');
+        const chipCompany  = document.getElementById('chip-company');
+        const chipProject  = document.getElementById('chip-project');
+
+        if (chipLocation) chipLocation.textContent = user.city        || '—';
+        if (chipCompany)  chipCompany.textContent  = user.workingFor  || '—';
+        if (chipProject)  chipProject.textContent  = user.activeProject || '—';
     }
 
     // ── Selected Works ───────────────────────────────────────────
     updateProjects(projects) {
-        // Target the <tbody> inside the projects table
-        const tbody = document.querySelector('#projects-grid tbody');
-        if (!tbody) return;
-        tbody.innerHTML = '';
-        projects.forEach((p, i) => tbody.appendChild(this.createProjectRow(p, i)));
+        const list = document.getElementById('projects-list');
+        if (!list) return;
+        list.innerHTML = '';
+        projects.forEach(p => list.appendChild(this.createProjectCard(p)));
     }
 
-    createProjectRow(project, index) {
-        const tr = document.createElement('tr');
-        const id = `PRJ-${String(index + 1).padStart(3, '0')}`;
+    createProjectCard(project) {
+        const card = document.createElement('div');
+        card.className = 'project-card';
 
         const tagsHtml = (project.tags && project.tags.length)
-            ? project.tags.map(t => `<span class="badge badge-muted">${t.toUpperCase()}</span>`).join(' ')
-            : '<span class="badge badge-muted">—</span>';
+            ? project.tags.map(t => `<span class="tag">${t}</span>`).join('')
+            : '';
 
         const liveLink = project.deployedLink
-            ? `<a href="${project.deployedLink}" class="link-action" target="_blank" rel="noopener noreferrer">LIVE</a>`
-            : '';
-        const ghLink = project.gitHubLink
-            ? `<a href="${project.gitHubLink}" class="link-action" target="_blank" rel="noopener noreferrer">SOURCE</a>`
+            ? `<a href="${project.deployedLink}" class="project-link" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                Live
+               </a>`
             : '';
 
-        tr.innerHTML = `
-            <td class="td-id">${id}</td>
-            <td class="td-name">${project.name.toUpperCase()}</td>
-            <td class="td-desc">${project.description}</td>
-            <td class="td-tags">${tagsHtml}</td>
-            <td class="td-actions">${liveLink}${ghLink}</td>
+        const ghLink = project.gitHubLink
+            ? `<a href="${project.gitHubLink}" class="project-link" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                Source
+               </a>`
+            : '';
+
+        // Screenshot badge — shown only when an image exists
+        const imgBadge = project.screenShotUrl
+            ? `<span class="project-img-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                Preview
+               </span>`
+            : '';
+
+        card.innerHTML = `
+            <div class="project-info">
+                <p class="project-name">${project.name}</p>
+                <p class="project-desc">${project.description}</p>
+                <div class="project-tags">${tagsHtml}${imgBadge}</div>
+            </div>
+            <div class="project-links">${liveLink}${ghLink}</div>
         `;
 
-        return tr;
+        // Open lightbox on card click (if screenshot exists)
+        if (project.screenShotUrl) {
+            card.classList.add('has-image');
+            card.addEventListener('click', (e) => {
+                // Don't intercept clicks on the external links
+                if (e.target.closest('a')) return;
+                if (typeof window.openLightbox === 'function') {
+                    window.openLightbox(
+                        project.screenShotUrl,
+                        project.backgroundColor || '#1a1a1a',
+                        project.name,
+                        project.deployedLink || '',
+                        project.gitHubLink   || ''
+                    );
+                }
+            });
+        }
+
+        return card;
     }
 
-    // ── Tools ────────────────────────────────────────────────────
+    // ── Tools / Stack ────────────────────────────────────────────
     updateTools(tools) {
         const grid = document.getElementById('tools-grid');
         if (!grid) return;
         grid.innerHTML = '';
-        tools.forEach(t => grid.appendChild(this.createToolCell(t)));
+        tools.forEach(t => grid.appendChild(this.createStackItem(t)));
     }
 
-    createToolCell(tool) {
-        const cell = document.createElement('div');
-        cell.className = 'tool-cell';
-        cell.textContent = tool.name.toUpperCase();
-        return cell;
+    createStackItem(tool) {
+        const div = document.createElement('div');
+        div.className = 'stack-item';
+        div.textContent = tool.name;
+        return div;
     }
 
     // ── Contact ──────────────────────────────────────────────────
     updateContact(user) {
-        const tbody = document.querySelector('#contact-links tbody') ||
-                      document.getElementById('contact-links');
-        if (!tbody) return;
+        const grid = document.getElementById('contact-links');
+        if (!grid) return;
 
         const contactInfo = [
-            { channel: 'LinkedIn',  handle: 'Anirudh Singh',       url: user.contact.linkedIn,  label: 'CONNECT' },
-            { channel: 'GitHub',    handle: 'flutterninja9',        url: user.contact.github,    label: 'VIEW' },
-            { channel: 'Instagram', handle: '@the_flutter_ninja',   url: user.contact.instagram, label: 'FOLLOW' },
-            { channel: 'Email',     handle: 'Direct message',       url: user.contact.email,     label: 'SEND' },
+            { platform: 'LinkedIn',  handle: 'Anirudh Singh',      url: user.contact.linkedIn,  label: 'Connect ↗' },
+            { platform: 'GitHub',    handle: 'flutterninja9',       url: user.contact.github,    label: 'View profile ↗' },
+            { platform: 'Instagram', handle: '@the_flutter_ninja',  url: user.contact.instagram, label: 'Follow ↗' },
+            { platform: 'Email',     handle: 'Direct message',      url: user.contact.email,     label: 'Send email ↗' },
         ];
 
-        tbody.innerHTML = '';
+        grid.innerHTML = '';
         contactInfo.forEach(c => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td class="td-channel">${c.channel.toUpperCase()}</td>
-                <td class="status-sep">//</td>
-                <td class="td-handle">${c.handle}</td>
-                <td class="td-contact-link">
-                    <a href="${c.url}" target="_blank" rel="noopener noreferrer">${c.label}</a>
-                </td>
+            const card = document.createElement('div');
+            card.className = 'contact-card';
+            card.innerHTML = `
+                <p class="contact-card-platform">${c.platform}</p>
+                <p class="contact-card-handle">${c.handle}</p>
+                <p class="contact-card-action">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                    ${c.label}
+                </p>
             `;
-            // Intercept click
-            tr.querySelector('a').addEventListener('click', (e) => {
-                e.preventDefault();
-                this.openUrl(c.url);
-            });
-            tbody.appendChild(tr);
+            card.addEventListener('click', () => this.openUrl(c.url));
+            grid.appendChild(card);
         });
     }
 
     // ── Navigation ────────────────────────────────────────────────
     updateNavigation(user) {
-        const githubLink = document.getElementById('github-link');
+        const githubLink       = document.getElementById('github-link');
+        const githubLinkMobile = document.getElementById('github-link-mobile');
+
+        const openGH = (e) => {
+            e.preventDefault();
+            this.openUrl(user.contact.github);
+        };
+
         if (githubLink) {
             githubLink.href = user.contact.github;
-            githubLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.openUrl(user.contact.github);
-            });
+            githubLink.addEventListener('click', openGH);
+        }
+        if (githubLinkMobile) {
+            githubLinkMobile.href = user.contact.github;
+            githubLinkMobile.addEventListener('click', openGH);
         }
     }
 
